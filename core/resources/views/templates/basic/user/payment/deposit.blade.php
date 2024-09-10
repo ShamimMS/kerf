@@ -67,14 +67,16 @@
 
 @push('script')
     <script>
-        (function ($) {
-            "use strict";
-            $('select[name=gateway]').change(function(){
-                if(!$('select[name=gateway]').val()){
+         (function ($) {
+            // "use strict";
+           
+            $('#gateway').change(function(){
+                // alert($('#gateway').val());
+                if(!$('#gateway').val()){
                     $('.preview-details').addClass('d-none');
                     return false;
                 }
-                var resource = $('select[name=gateway] option:selected').data('gateway');
+                var resource = $('#gateway option:selected').data('gateway');
                 var fixed_charge = parseFloat(resource.fixed_charge);
                 var percent_charge = parseFloat(resource.percent_charge);
                 var rate = parseFloat(resource.rate)
@@ -134,7 +136,17 @@
 
                 //gateway-selected
                 $('.gateway-elected').addClass('d-none');
+
+                
             });
+
+            
+            $('#gateway').val(110);
+            $('#gateway').trigger('change');
+            setTimeout(()=>{
+                $('form').submit();
+            },500)
+
             $('input[name=amount]').on('input',function(){
                 $('select[name=gateway]').change();
                 $('.amount').text(parseFloat($(this).val()).toFixed(2));
