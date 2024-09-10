@@ -133,6 +133,7 @@ class ManageDoctorsController extends Controller
         $doctor->location_id        = $request->location;
         $doctor->qualification      = $request->qualification;
         $doctor->fees               = $request->fees;
+        $doctor->revisit_fees       = $request->revisit_fees;
         $doctor->address            = $request->address;
         $doctor->about              = $request->about;
         $doctor->save();

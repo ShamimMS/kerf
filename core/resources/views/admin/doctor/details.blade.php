@@ -178,6 +178,16 @@
                                                 value="{{ $doctor->qualification }}" class="form-control" required />
                                         </div>
                                     </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label> @lang('Revisit Fees')</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">{{ $general->cur_sym }}</span>
+                                                <input type="number" name="revisit_fees" value="{{ $doctor->revisit_fees }}"
+                                                    class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group">

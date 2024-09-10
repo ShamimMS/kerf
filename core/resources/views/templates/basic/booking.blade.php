@@ -183,6 +183,7 @@
                                             @endif
                                         </div>
                                     </div>
+                                    {{ route('doctors.appointment.store', $doctor->id) }}
                                     @if ($doctor->serial_day && $doctor->serial_or_slot)
                                     <form action="{{ route('doctors.appointment.store', $doctor->id) }}"
                                         method="post" class="appointment-from">
@@ -207,6 +208,18 @@
                                                         </select>
                                                     </div>
                                                 </div>
+
+                                                <div
+                                                    class="overview-date-area d-flex flex-wrap align-items-center justify-content-start gap-5">
+                                                    <div class="overview-date-header">
+                                                        <h6 class="title">@lang('Select if you re-visit in a week')</h6>
+                                                    </div>
+                                                    <div class="overview-date-select">
+                                                        <input type="checkbox" value="{{ $doctor->revisit_fees }}" name="re_visit" id="re_visit" />
+                                                       
+                                                    </div>
+                                                </div>
+
                                             </div>
                                             <ul class="clearfix time-serial-parent">
                                                 @foreach ($doctor->serial_or_slot as $item)
@@ -296,8 +309,11 @@
                                                             <li><span>@lang('Serial / Slot')</span> :
                                                                 <span class="custom-color book-time"></span>
                                                             </li>
-                                                            <li><span>@lang('Fees')</span> :
+                                                            <li id="feeli"><span>@lang('Fees')</span> :
                                                                 {{ $doctor->fees }} {{ $general->cur_text }}
+                                                            </li>
+                                                            <li id="re-feeli"><span>@lang('Fees')</span> :
+                                                                {{ $doctor->revisit_fees }} {{ $general->cur_text }}
                                                             </li>
                                                         </ul>
                                                         <div class="booking-confirm-btn">
@@ -348,7 +364,18 @@
         $(".available-time").on('click', function() {
             $('.time').val($(this).data('value'));
             $('.book-time').text($(this).data('value'));
-        })
+        });
+        
+        $('#re-feeli').hide();
+        $('#re_visit').on('change', function() {
+            if ($(this).is(':checked')) {
+            $('#feeli').hide();
+            $('#re-feeli').show();
+            } else {
+            $('#re-feeli').hide();
+            $('#feeli').show();
+            }
+        });
 
         function slug(text) {
             return text.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
