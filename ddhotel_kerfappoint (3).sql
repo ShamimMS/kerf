@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 09, 2024 at 11:56 AM
+-- Generation Time: Sep 10, 2024 at 12:49 PM
 -- Server version: 8.2.0
 -- PHP Version: 8.1.26
 
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `appointments`
@@ -208,7 +208,9 @@ INSERT INTO `appointments` (`id`, `doctor_id`, `added_doctor_id`, `added_assista
 (64, 1, 0, 0, 0, 0, 1, 'Shamim MS', 'toshamimdxb@gmail.com', '+9109746656082', 37, NULL, '2024-08-25', '09:30:am', 2, 'Q875FDQ8SEOQ', 0, 0, 0, NULL, 0, 0, 0, '2024-08-12 07:03:03', '2024-08-12 07:03:03'),
 (65, 1, 0, 0, 0, 0, 1, 'Shamim MS', 'toshamimdxb@gmail.com', '+9109746656082', 37, NULL, '2024-08-25', '09:30:am', 2, '2XF3Z144E1RE', 0, 0, 0, NULL, 0, 0, 0, '2024-08-12 07:03:25', '2024-08-12 07:03:25'),
 (66, 1, 0, 0, 0, 0, 1, 'Shamim MS', 'toshamimdxb@gmail.com', '+9109746656082', 37, NULL, '2024-08-28', '09:30:am', 2, 'Y8UNMDUNQESY', 0, 0, 0, NULL, 0, 0, 0, '2024-08-12 07:05:12', '2024-08-12 07:05:12'),
-(67, 1, 1, 0, 0, 0, 0, 'Shamim MS', 'toshamimdxb@gmail.com', '+9109746656082', 37, 'saSs', '2024-09-07', '09:00:am', 0, NULL, 1, 0, 0, NULL, 0, 0, 0, '2024-09-05 04:38:29', '2024-09-05 04:38:29');
+(67, 1, 1, 0, 0, 0, 0, 'Shamim MS', 'toshamimdxb@gmail.com', '+9109746656082', 37, 'saSs', '2024-09-07', '09:00:am', 0, NULL, 1, 0, 0, NULL, 0, 0, 0, '2024-09-05 04:38:29', '2024-09-05 04:38:29'),
+(68, 1, 0, 0, 0, 0, 1, 'Shamim MS', 'toshamimdxb@gmail.com', '+9109746656082', 37, NULL, '2024-09-18', '04:00:pm', 2, '9SAQKOTAOJXM', 0, 0, 0, NULL, 0, 0, 0, '2024-09-10 09:11:17', '2024-09-10 09:11:17'),
+(69, 1, 0, 0, 0, 0, 1, 'Shamim MS', 'toshamimdxb@gmail.com', '+9109746656082', 37, NULL, '2024-09-12', '04:00:pm', 2, 'UBR5OXA6UHTZ', 0, 0, 0, NULL, 0, 0, 0, '2024-09-10 12:35:51', '2024-09-10 12:35:51');
 
 -- --------------------------------------------------------
 
@@ -389,6 +391,7 @@ CREATE TABLE IF NOT EXISTS `doctors` (
   `max_serial` int UNSIGNED NOT NULL DEFAULT '0',
   `duration` int UNSIGNED NOT NULL DEFAULT '0',
   `fees` int UNSIGNED NOT NULL,
+  `revisit_fees` int UNSIGNED NOT NULL,
   `department_id` int UNSIGNED NOT NULL,
   `location_id` int UNSIGNED NOT NULL,
   `featured` tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'YES⇾1, NO⇾0',
@@ -405,8 +408,8 @@ CREATE TABLE IF NOT EXISTS `doctors` (
 -- Dumping data for table `doctors`
 --
 
-INSERT INTO `doctors` (`id`, `name`, `username`, `email`, `password`, `mobile`, `address`, `balance`, `image`, `qualification`, `speciality`, `about`, `slot_type`, `serial_or_slot`, `eve_serial_or_slot`, `start_time`, `end_time`, `start_time_evening`, `end_time_evening`, `serial_day`, `max_serial`, `duration`, `fees`, `department_id`, `location_id`, `featured`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Dr. Sunil Janardhanan', 'sunil22', 'sunil@gmail.com', 'eyJpdiI6Ik1TZ2MxMDVZdTlQYWpIYVdRTll4bkE9PSIsInZhbHVlIjoibWFmUUgyNkFYNzIrR05Vd0c2UVVVQT09IiwibWFjIjoiMjc5YWNhNDAxMjlkNjc3NzI5NjE2NDM4OTdkNTFiODZlNjUwOWMwMTljMTE0NmQ5NzEzMGY5MTA0NTY4OWFlMyIsInRhZyI6IiJ9', '+919544520252', 'Kerf Kollam', 0.00000000, '66de93e9754911725862889.jpg', 'MBBS MS (ENT), Fellowship in Rhinology (Australia) , Specialist A to GCC', '', 'Dr', 2, '[\"09:00:am\",\"09:30:am\",\"04:00:pm\",\"04:30:pm\",\"05:00:pm\",\"05:30:pm\"]', '[\"04:00:pm\",\"04:30:pm\",\"05:00:pm\",\"05:30:pm\"]', '09:00 am', '10:00 am', '04:00 pm', '06:00 pm', 20, 0, 30, 520, 1, 1, 0, 1, NULL, '2024-07-31 13:31:47', '2024-09-09 10:11:06');
+INSERT INTO `doctors` (`id`, `name`, `username`, `email`, `password`, `mobile`, `address`, `balance`, `image`, `qualification`, `speciality`, `about`, `slot_type`, `serial_or_slot`, `eve_serial_or_slot`, `start_time`, `end_time`, `start_time_evening`, `end_time_evening`, `serial_day`, `max_serial`, `duration`, `fees`, `revisit_fees`, `department_id`, `location_id`, `featured`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Dr. Sunil Janardhanan', 'sunil22', 'sunil@gmail.com', 'eyJpdiI6InVlRkM5N1Nzd1VycVd6RllFOXdFYlE9PSIsInZhbHVlIjoiNlNaMlJoUS92WkwzZE50VVp4M09vUT09IiwibWFjIjoiNjAzMzllMDZmN2M1ZTU1YTRmZTJmOTc0Y2Y4OTI2NWRiZGY5ODdiYjUxNTgwYWI4ZGYyYTZmYmQ2Zjg1NWVhNyIsInRhZyI6IiJ9', '+919544520252', 'Kerf Kollam', 0.00000000, '66de93e9754911725862889.jpg', 'MBBS MS (ENT), Fellowship in Rhinology (Australia) , Specialist A to GCC', '', 'Dr', 2, '[\"09:00:am\",\"09:30:am\",\"04:00:pm\",\"04:30:pm\",\"05:00:pm\",\"05:30:pm\"]', '[\"04:00:pm\",\"04:30:pm\",\"05:00:pm\",\"05:30:pm\"]', '09:00 am', '10:00 am', '04:00 pm', '06:00 pm', 20, 0, 30, 520, 350, 1, 1, 0, 1, NULL, '2024-07-31 13:31:47', '2024-09-10 05:56:53');
 
 -- --------------------------------------------------------
 
