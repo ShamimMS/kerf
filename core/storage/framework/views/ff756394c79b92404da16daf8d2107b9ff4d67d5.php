@@ -189,6 +189,7 @@
                                             <?php endif; ?>
                                         </div>
                                     </div>
+                                    
                                     <?php if($doctor->serial_day && $doctor->serial_or_slot): ?>
                                     <form action="<?php echo e(route('doctors.appointment.store', $doctor->id)); ?>"
                                         method="post" class="appointment-from">
@@ -196,12 +197,12 @@
                                         <div class="overview-booking-area">
                                             <div class="overview-booking-header-right mrb-10">
                                                 <div
-                                                    class="overview-date-area d-flex flex-wrap align-items-center justify-content-start gap-5">
+                                                    class="overview-date-area d-flex flex-wrap align-items-center justify-content-start gap-8">
                                                     <div class="overview-date-header">
                                                         <h5 class="title"><?php echo app('translator')->get('Choose Your Date & Time'); ?></h5>
                                                     </div>
                                                     <div class="overview-date-select">
-                                                        <select class="form-control date-select" name="booking_date"
+                                                        <select class="form-control date-select" name="booking_date" id="booking_date"
                                                             required>
                                                             <option value="" selected disabled>
                                                                 <?php echo app('translator')->get('Select Date'); ?></option>
@@ -214,6 +215,19 @@
                                                         </select>
                                                     </div>
                                                 </div>
+
+                                                <div
+                                                    class="overview-date-area d-flex flex-wrap align-items-center justify-content-start gap-1">
+                                                    <div class="overview-date-header">
+                                                        <input type="checkbox" value="<?php echo e($doctor->revisit_fees); ?>" name="re_visit" id="re_visit" />
+                                                       
+                                                    </div>
+                                                    <div class="overview-date-select">
+                                                        <h6 class="title"><?php echo app('translator')->get('Re-visit'); ?></h6>
+                                                       
+                                                    </div>
+                                                </div>
+
                                             </div>
                                             <ul class="clearfix time-serial-parent">
                                                 <?php $__currentLoopData = $doctor->serial_or_slot; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -267,7 +281,7 @@
                                                                     class="col-lg-12 form-group d-flex flex-wrap justify-content-start gap-3">
                                                                     <button type="submit"
                                                                         class="cmn-btn payment-system"
-                                                                        data-value="2"><?php echo app('translator')->get('Will Pay In Cash'); ?></button>
+                                                                        data-value="2"><?php echo app('translator')->get('Pay In Cash'); ?></button>
 
                                                                     <?php if($general->online_payment): ?>
                                                                     <button type="submit"
@@ -304,8 +318,12 @@
                                                             <li><span><?php echo app('translator')->get('Serial / Slot'); ?></span> :
                                                                 <span class="custom-color book-time"></span>
                                                             </li>
-                                                            <li><span><?php echo app('translator')->get('Fees'); ?></span> :
+                                                            <li id="feeli"><span><?php echo app('translator')->get('Fees'); ?></span> :
                                                                 <?php echo e($doctor->fees); ?> <?php echo e($general->cur_text); ?>
+
+                                                            </li>
+                                                            <li id="re-feeli"><span><?php echo app('translator')->get('Fees'); ?></span> :
+                                                                <?php echo e($doctor->revisit_fees); ?> <?php echo e($general->cur_text); ?>
 
                                                             </li>
                                                         </ul>
@@ -346,6 +364,8 @@
     .input-group-text {
         border-radius: 0.5rem 0 0 0.5rem !important;
     }
+    #booking_date{margin-left: 70px;}
+    #re_visit{vertical-align: text-top;margin-top: -2px;}
 </style>
 <?php $__env->stopPush(); ?>
 
@@ -357,7 +377,18 @@
         $(".available-time").on('click', function() {
             $('.time').val($(this).data('value'));
             $('.book-time').text($(this).data('value'));
-        })
+        });
+
+        $('#re-feeli').hide();
+        $('#re_visit').on('change', function() {
+            if ($(this).is(':checked')) {
+            $('#feeli').hide();
+            $('#re-feeli').show();
+            } else {
+            $('#re-feeli').hide();
+            $('#feeli').show();
+            }
+        });
 
         function slug(text) {
             return text.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');

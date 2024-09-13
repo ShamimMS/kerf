@@ -70,8 +70,7 @@ trait AppointmentManager
     public function store(Request $request, $id)
     {
         $this->validation($request);
-        // print_r($request);
-        
+
         // echo $request->re_visit ?  $request->re_visit: 'not selected' ;
         // exit;
         $doctor = Doctor::active()->find($id);

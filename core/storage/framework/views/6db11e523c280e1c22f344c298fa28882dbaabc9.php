@@ -1,61 +1,60 @@
-@extends($activeTemplate . 'layouts.frontend')
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="containern ptb-80">
     <div class="row justify-content-center">
         <div class="col-lg-6">
-            <form action="{{route('deposit.insert')}}" method="post">
-                @csrf
+            <form action="<?php echo e(route('deposit.insert')); ?>" method="post">
+                <?php echo csrf_field(); ?>
                 <input type="hidden" name="currency">
-                <input type="hidden" name="trx" value="{{$trx}}">
-                <input type="hidden" name="doctor_id" value="{{$doctorId}}">
+                <input type="hidden" name="trx" value="<?php echo e($trx); ?>">
+                <input type="hidden" name="doctor_id" value="<?php echo e($doctorId); ?>">
 
                 <div class="card custom--card">
                     <div class="card-header">
-                        <h5 class="card-title">@lang('Appointment Amount Deposit')</h5>
+                        <h5 class="card-title"><?php echo app('translator')->get('Appointment Amount Deposit'); ?></h5>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label class="form-label">@lang('Select Gateway')</label>
+                            <label class="form-label"><?php echo app('translator')->get('Select Gateway'); ?></label>
                             <select class="form-select" name="gateway" required>
-                                <option value="">@lang('Select One')</option>
-                                @foreach($gatewayCurrency as $data)
-                                <option value="{{$data->method_code}}" @selected(old('gateway') == $data->method_code) data-gateway="{{ $data }}">{{$data->name}}</option>
-                                @endforeach
+                                <option value=""><?php echo app('translator')->get('Select One'); ?></option>
+                                <?php $__currentLoopData = $gatewayCurrency; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($data->method_code); ?>" <?php if(old('gateway') == $data->method_code): echo 'selected'; endif; ?> data-gateway="<?php echo e($data); ?>"><?php echo e($data->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">@lang('Amount')</label>
+                            <label class="form-label"><?php echo app('translator')->get('Amount'); ?></label>
                             <div class="input-group">
-                                <input type="number" step="any" name="amount" class="form-control" value="{{ $fees }}" autocomplete="off" readonly required>
-                                <span class="input-group-text">{{ $general->cur_text }}</span>
+                                <input type="number" step="any" name="amount" class="form-control" value="<?php echo e($fees); ?>" autocomplete="off" readonly required>
+                                <span class="input-group-text"><?php echo e($general->cur_text); ?></span>
                             </div>
                         </div>
                         <div class="mt-3 preview-details d-none">
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between">
-                                    <span>@lang('Limit')</span>
-                                    <span><span class="min fw-bold">0</span> {{__($general->cur_text)}} - <span class="max fw-bold">0</span> {{__($general->cur_text)}}</span>
+                                    <span><?php echo app('translator')->get('Limit'); ?></span>
+                                    <span><span class="min fw-bold">0</span> <?php echo e(__($general->cur_text)); ?> - <span class="max fw-bold">0</span> <?php echo e(__($general->cur_text)); ?></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between">
-                                    <span>@lang('Charge')</span>
-                                    <span><span class="charge fw-bold">0</span> {{__($general->cur_text)}}</span>
+                                    <span><?php echo app('translator')->get('Charge'); ?></span>
+                                    <span><span class="charge fw-bold">0</span> <?php echo e(__($general->cur_text)); ?></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between">
-                                    <span>@lang('Payable')</span> <span><span class="payable fw-bold"> 0</span> {{__($general->cur_text)}}</span>
+                                    <span><?php echo app('translator')->get('Payable'); ?></span> <span><span class="payable fw-bold"> 0</span> <?php echo e(__($general->cur_text)); ?></span>
                                 </li>
                                 <li class="list-group-item justify-content-between d-none rate-element">
 
                                 </li>
                                 <li class="list-group-item justify-content-between d-none in-site-cur">
-                                    <span>@lang('In') <span class="method_currency"></span></span>
+                                    <span><?php echo app('translator')->get('In'); ?> <span class="method_currency"></span></span>
                                     <span class="final_amo fw-bold">0</span>
                                 </li>
                                 <li class="list-group-item justify-content-center crypto_currency d-none">
-                                    <span>@lang('Conversion with') <span class="method_currency"></span> @lang('and final value will Show on next step')</span>
+                                    <span><?php echo app('translator')->get('Conversion with'); ?> <span class="method_currency"></span> <?php echo app('translator')->get('and final value will Show on next step'); ?></span>
                                 </li>
                             </ul>
                         </div>
-                        <button type="submit" class="btn cmn-btn w-100 my-2 submitConfirmation">@lang('Submit')</button>
+                        <button type="submit" class="btn cmn-btn w-100 my-2 submitConfirmation"><?php echo app('translator')->get('Submit'); ?></button>
                         <p class="msg text-danger d-none"></p>
                     </div>
                 </div>
@@ -63,9 +62,9 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
     <script>
         (function ($) {
             "use strict";
@@ -102,8 +101,8 @@
                 $('.payable').text(payable);
                 var final_amo = (parseFloat((parseFloat(amount) + parseFloat(charge)))*rate).toFixed(toFixedDigit);
                 $('.final_amo').text(final_amo);
-                if (resource.currency != '{{ $general->cur_text }}') {
-                    var rateElement = `<span class="fw-bold">@lang('Conversion Rate')</span> <span><span  class="fw-bold">1 {{__($general->cur_text)}} = <span class="rate">${rate}</span>  <span class="method_currency">${resource.currency}</span></span></span>`;
+                if (resource.currency != '<?php echo e($general->cur_text); ?>') {
+                    var rateElement = `<span class="fw-bold"><?php echo app('translator')->get('Conversion Rate'); ?></span> <span><span  class="fw-bold">1 <?php echo e(__($general->cur_text)); ?> = <span class="rate">${rate}</span>  <span class="method_currency">${resource.currency}</span></span></span>`;
                     $('.rate-element').html(rateElement)
                     $('.rate-element').removeClass('d-none');
                     $('.in-site-cur').removeClass('d-none');
@@ -141,4 +140,6 @@
             });
         })(jQuery);
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make($activeTemplate . 'layouts.frontend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\kerfapthostgit\core\resources\views/templates/basic/user/payment/deposit.blade.php ENDPATH**/ ?>

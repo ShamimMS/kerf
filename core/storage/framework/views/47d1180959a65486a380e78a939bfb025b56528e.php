@@ -257,6 +257,16 @@
                                                 value="<?php echo e($doctor->qualification); ?>" class="form-control" required />
                                         </div>
                                     </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label> <?php echo app('translator')->get('Revisit Fees'); ?></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><?php echo e($general->cur_sym); ?></span>
+                                                <input type="number" name="revisit_fees" value="<?php echo e($doctor->revisit_fees); ?>"
+                                                    class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group">
